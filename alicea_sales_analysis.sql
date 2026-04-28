@@ -45,15 +45,49 @@ SELECT
 
 -- ∗ What is the number of transactions per month and average transaction size by product category
 -- -- for the sales territory?
+-- ANSWER:  These are the number of transactoins per month 66, 51, 24, 74, 73, 78, 70, 62, 30, 61.
+-- ANSWER: These are the Average Transaction Size 33.40, 22.18, 32.37, 10.15, 547.32, 177.16, 30.00, 33.27, 24.40, 10.02
 
+SELECT *
+FROM inventory_categories LIMIT 5;
+SELECT *
+FROM Products LIMIT 5;
+
+SELECT
+	year(Transaction_Date),
+    month(Transaction_Date),
+    ic.Category,
+    COUNT(*) AS NumTransactions,
+    ROUND(AVG(Sale_Amount), 2) AS AvgTransactionSize
+FROM store_sales AS ss
+JOIN store_locations AS sl ON ss.Store_ID = sl.StoreId
+JOIN Products AS p ON ss.Prod_Num = p.ProdNum
+JOIN inventory_categories AS ic ON p.Categoryid = ic.Categoryid
+WHERE sl.State = 'New York'
+GROUP BY year(Transaction_Date), month(Transaction_Date), ic.Category
+ORDER BY  year(Transaction_Date), month(Transaction_Date), ic.Category;
 
 
 -- ∗ Can you provide a ranking of in-store sales performance by each store in the sales territory, or a
 -- ranking of online sales performance by state within an online sales territory?
-
+-- Top performer: New York (Store 850)
+-- Bottom performer: Brooklyn (Store 849)
+SELECT sl.StoreId, sl.StoreLocation, ROUND(SUM(Sale_Amount), 2) AS TotalRevenue
+FROM store_locations AS sl
+JOIN store_sales AS ss ON sl.StoreId = ss.Store_ID
+WHERE sl.state = 'New York'
+GROUP BY sl.StoreId, sl.StoreLocation
+ORDER BY TotalRevenue DESC;
 
 -- ∗ What is your recommendation for where to focus sales attention in the next quarter?
+-- I recommend focusing sales attention on these following area in the next quater:
 
+--  1. Underperforming Stores: Brooklyn and Syracuse are ranked at the bottom of the territory 
+--     in total revenue. These stores would benfit from targeted promotions and sales support.
 
-SELECT *
-FROM store_sales;
+-- 2. Seasonal Dip: May (month 5) shows the lowest monthly revenue. A spring promotion campaign could
+--    help boost sales during the slow period.alter
+
+-- 3. Product Category: Sationary & Supplies has the lowest average transaction size,
+--    bundling products could be a good way of improving sales. 
+
