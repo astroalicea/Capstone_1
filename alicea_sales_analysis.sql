@@ -82,12 +82,12 @@ ORDER BY TotalRevenue DESC;
 -- ∗ What is your recommendation for where to focus sales attention in the next quarter?
 -- I recommend focusing sales attention on these following area in the next quater:
 
---  1. Underperforming Stores: Brooklyn and Syracuse are ranked at the bottom of the territory 
---     in total revenue. These stores would benfit from targeted promotions and sales support.
+--  1. Underperforming Stores: Queens and Oswego are ranked at the bottom of the territory 
+--     in total revenue totalling 288553.14 and 302862.71 - These stores would benfit from targeted promotions and sales support.
 
--- 2. Seasonal Dip: May (month 5) shows the lowest monthly revenue. A spring promotion campaign could
+-- 2. Seasonal Dip: May (month 5) shows the lowest monthly revenue with 51,805.22 -  A spring promotion campaign could
 --    help boost sales during the slow period.alter
 
--- 3. Product Category: Sationary & Supplies has the lowest average transaction size,
+-- 3. Product Category: Sationary & Supplies has the lowest average transaction size of $9.21 and $9.24,
 --    bundling products could be a good way of improving sales. 
 
