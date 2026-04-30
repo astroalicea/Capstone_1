@@ -14,8 +14,7 @@ FROM store_sales
 JOIN store_locations ON store_sales.Store_ID = store_locations.StoreId
 WHERE state = "New York";
 
--- ∗ What is the month by month revenue breakdown for the sales territory? !(EXPORT AS A CSV)!
--- ANSWER:
+-- ∗ What is the month by month revenue breakdown for the sales territory?
 SELECT 
 	ROUND(SUM(Sale_Amount), 2) AS MonthlyRevenue,
 	year(Transaction_Date), 
@@ -28,7 +27,7 @@ ORDER BY year(Transaction_Date), month(Transaction_Date);
 
 
 -- ∗ Provide a comparison of total revenue for the specific sales territory and the region it belongs to.
--- ANSWER: New York revenue is 4,330,817 and the East revenue is 6,723,040.
+-- ANSWER: New York revenue is 4,330,817 and the East revenue is 6,723,040. New York is 64% of East reagion revenue.
 SELECT 
 	(SELECT ROUND(SUM(ss.Sale_Amount))
     FROM Store_Sales AS ss
@@ -71,7 +70,7 @@ ORDER BY  year(Transaction_Date), month(Transaction_Date), ic.Category;
 -- ∗ Can you provide a ranking of in-store sales performance by each store in the sales territory, or a
 -- ranking of online sales performance by state within an online sales territory?
 -- Top performer: New York (Store 850)
--- Bottom performer: Brooklyn (Store 849)
+-- Bottom performer: Queens (Store 851)
 SELECT sl.StoreId, sl.StoreLocation, ROUND(SUM(Sale_Amount), 2) AS TotalRevenue
 FROM store_locations AS sl
 JOIN store_sales AS ss ON sl.StoreId = ss.Store_ID
@@ -83,10 +82,13 @@ ORDER BY TotalRevenue DESC;
 -- I recommend focusing sales attention on these following area in the next quater:
 
 --  1. Underperforming Stores: Queens and Oswego are ranked at the bottom of the territory 
---     in total revenue totalling 288553.14 and 302862.71 - These stores would benfit from targeted promotions and sales support.
+--     in total revenue, totalling 288,553.14 and 302,862.71 - These stores would benfit from targeted local promotions and sales support.
+-- 		these two stores need focused attention. 
 
--- 2. Seasonal Dip: May (month 5) shows the lowest monthly revenue with 51,805.22 -  A spring promotion campaign could
---    help boost sales during the slow period.alter
+-- 2. Seasonal Dip: Two consistant dips appear every year:
+-- 		May(month 5): Spring slump
+-- 		November/December(months 11-12): Late-year dip
+-- Both periods would benfit from targeted promotional campaigns.  
 
 -- 3. Product Category: Sationary & Supplies has the lowest average transaction size of $9.21 and $9.24,
 --    bundling products could be a good way of improving sales. 
